@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
+//same as updating....
 function DeleteSport() {
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isError, setError] = useState(Boolean);
   const [id, setId] = useState("");
   async function handleClick(e) {
     e.preventDefault();
@@ -15,8 +17,12 @@ function DeleteSport() {
           const update = response.data;
           console.log(update);
           setIsDeleted(true);
+          setError(false);
         })
-        .catch(error => console.error(`Error: ${error})`));
+        .catch(error => {
+          setError(true);
+          console.error(`Error: ${error})`);
+        });
     } catch (error) {
       console.log("bad call");
     }
@@ -35,7 +41,7 @@ function DeleteSport() {
           Add Sport
         </button>
       </form>
-      {isDeleted && <h1>Selected sport has been removed! 🚯</h1>}
+      {isDeleted ? <h1>Selected sport has been removed! 🚯</h1> : isError && <h1>We had an problem with finding the ID 📄</h1>}
     </div>
   );
 }

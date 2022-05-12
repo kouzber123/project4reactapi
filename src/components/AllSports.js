@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Post from "./Post";
 function AllSports() {
@@ -21,8 +21,6 @@ function AllSports() {
       })
       .catch(error => console.error(`Error: ${error})`));
   }
-
-  //listens 10s to refresh data
 
   handleData();
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Post from "./Post";
 import axios from "axios";
 
@@ -6,12 +6,14 @@ function Search() {
   const [searchTerm, setSearchTerm] = useState("");
   const [search, setSearch] = useState("");
   const [type, setType] = useState("");
+  const [isError, setError] = useState(Boolean);
   //Axios request
 
   function handleInput(e) {
     const value = e.target.value;
     setSearchTerm(value);
   }
+
   async function handleData(e) {
     //terniary operation for changing url according to the selected radio input
     const url = `https://hidden-cliffs-40709.herokuapp.com/api/${type === "title" ? "sport/" : ""}`;
@@ -20,8 +22,12 @@ function Search() {
       .then(response => {
         const sport = response.data.result;
         setSearch(sport);
+        setError(false);
       })
-      .catch(error => console.error(`Error: ${error})`));
+      .catch(error => {
+        setError(true);
+        console.error(`Error: ${error})`);
+      });
   }
   return (
     <div>
@@ -38,6 +44,7 @@ function Search() {
       </label>{" "}
       {"|"} <input onChange={e => setType(e.target.id)} value="id" type="radio" name="select" id="id" /> <label htmlFor="id">Search by id</label>
       <Post post={search} />
+      {isError && <h1>We couldnt find that Sport by {type}</h1>}
     </div>
   );
 }

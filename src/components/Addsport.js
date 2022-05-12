@@ -1,22 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+
+//set usestates accodirng the situation and call axios
 function AddSport() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [added, setAdded] = useState(false);
-
-  const url = "https://hidden-cliffs-40709.herokuapp.com/api/add";
+  const [added, setAdded] = useState(Boolean);
+  const [isError, setError] = useState(Boolean);
+  const url = `https://hidden-cliffs-40709.herokuapp.com/api/add`;
   function handleClick(e) {
     e.preventDefault();
 
     try {
-      axios.post(url, { title: title, content: content }).then(response => {
-        if (response) {
-          const resp = response.data;
-          setAdded(true);
-        }
-      });
-    } catch (error) {}
+      axios
+        .post(url, { title: title, body: content })
+        .then(response => {
+          if (response) {
+            setAdded(true);
+            setError(false);
+          }
+        })
+        .error(setError(true));
+    } catch (error) {
+      console.log("Something went wrong");
+    }
   }
 
   return (
@@ -35,7 +42,7 @@ function AddSport() {
         <button onClick={e => handleClick(e)} className="w-100 btn btn-lg btn-primary" type="submit">
           Add Sport
         </button>
-        {Boolean(added) && <h1>Added new Sport!</h1>}
+        {isError ? <h1>Could not add the sport</h1> : added && <h1>Added a new sport</h1>}
       </form>
     </div>
   );

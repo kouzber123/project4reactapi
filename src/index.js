@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home";
@@ -7,8 +7,13 @@ import AllSports from "./components/AllSports";
 import AddSport from "./components/Addsport";
 import UpdateSport from "./components/UpdateSport";
 import DeleteSport from "./components/DeleteSport";
+import Footer from "./components/Footer";
 import "../src/App.css";
+const express = require("express");
+const app = express();
+app.use(express.static(`${__dirname}/src`));
 function Main() {
+  //Create routes and create paths and render react components to the end points
   return (
     <BrowserRouter>
       <Header />
@@ -20,8 +25,15 @@ function Main() {
         <Route path="/updateSport" element={<UpdateSport />} />
         <Route path="/deleteSport" element={<DeleteSport />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
+//render the application
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(<Main tab="home" />);
 
-ReactDOM.render(<Main />, document.getElementById("root"));
+app.listen(process.env.PORT, () => {
+  console.log("runnning on server");
+});
