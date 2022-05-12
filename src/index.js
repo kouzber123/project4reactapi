@@ -9,9 +9,6 @@ import UpdateSport from "./components/UpdateSport";
 import DeleteSport from "./components/DeleteSport";
 import Footer from "./components/Footer";
 import "../src/App.css";
-const express = require("express");
-const app = express();
-app.use(express.static(`${__dirname}/src`));
 function Main() {
   //Create routes and create paths and render react components to the end points
   return (
@@ -33,7 +30,3 @@ function Main() {
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(<Main tab="home" />);
-
-app.listen(process.env.PORT, () => {
-  console.log("runnning on server");
-});
