@@ -8,7 +8,7 @@ function UpdateSport() {
   const [id, setId] = useState("");
   const [updateSummary, setUpdateSummary] = useState("");
   const [isUpdated, setIsUpdated] = useState(Boolean);
-  const [isError, setError] = useState(Boolean);
+  const [isError, setError] = useState(false);
   async function updateData(e) {
     e.preventDefault();
     const url = `https://hidden-cliffs-40709.herokuapp.com/api/update/${id}`;
@@ -24,7 +24,6 @@ function UpdateSport() {
           const update = response.data;
           console.log(update);
           setIsUpdated(true);
-          setError(false);
         })
         .catch(error => {
           setError(true);

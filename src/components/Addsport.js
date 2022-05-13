@@ -20,7 +20,10 @@ function AddSport() {
             setError(false);
           }
         })
-        .error(setError(true));
+        .catch(error => {
+          setError(true);
+          console.log(error);
+        });
     } catch (error) {
       console.log("Something went wrong");
     }
