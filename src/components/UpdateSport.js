@@ -28,6 +28,7 @@ function UpdateSport() {
         })
         .catch(error => {
           setError(true);
+          setIsUpdated(false);
           console.error(`Error: ${error})`);
         });
     } catch (error) {
